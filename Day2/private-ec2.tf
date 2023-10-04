@@ -1,11 +1,12 @@
 resource "aws_instance" "application" {
+  count = length(var.availability_zones)
   ami           = var.ami
   instance_type = var.instance_type
-  subnet_id     = aws_subnet.private_subnet.id
+  subnet_id     = module.network.private_subnets[count.index].id
   key_name = aws_key_pair.tf-key-pair.key_name
-  vpc_security_group_ids = [aws_security_group.private_sg.id]
+  vpc_security_group_ids = [module.network.private_sg.id]
 
   tags = {
-    Name = "application_terra"
+    Name = "application-${count.index}-${var.region}-terra"
   }
 }

@@ -1,10 +1,21 @@
-  region = var.region
-  cidr = var.vpc_cidr_block
-  availability_zones   = var.availability_zones
-  public_subnets_cidr  = var.public_subnets_cidr_blocks
-  private_subnets_cidr = var.private_subnets_cidr_blocks
-  ami = var.ami
-  instance_type = var.instance_type
-  public_subnets_cidr_blocks = var.public_subnets_cidr_blocks
-  private_subnets_cidr_blocks = var.private_subnets_cidr_blocks
-  tcp_protocol = var.tcp_protocol
+variable "ami" {}
+
+variable "instance_type" {}
+
+variable "region" {}
+
+variable "vpc_cidr_block" {}
+
+variable "public_subnets_cidr_blocks" {
+  type        = list(string)
+}
+
+variable "private_subnets_cidr_blocks" {
+  type        = list(string)
+}
+
+variable "availability_zones" {
+  type        = list(string)
+}
+
+variable "protocol" {}

@@ -6,7 +6,7 @@ resource "aws_security_group" "public_sg" {
   ingress {
     from_port   = 22
     to_port     = 22
-    protocol    = module.network.tcp_protocol
+    protocol    = var.protocol
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -18,7 +18,7 @@ resource "aws_security_group" "public_sg" {
     ipv6_cidr_blocks = ["::/0"]
   }
     tags =  {
-    Name = "public_sg_terra1"
+    Name = "public_sg_terra"
   }
 
 }

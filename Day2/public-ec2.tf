@@ -1,9 +1,10 @@
 resource "aws_instance" "bastion" {
+  count = length(var.availability_zones)
   ami           = "ami-06e46074ae430fba6" 
   instance_type = "t2.micro"
-  subnet_id     = aws_subnet.public_subnet.id
+  subnet_id     = module.network.public_subnets[count.index].id
   key_name = aws_key_pair.tf-key-pair.key_name
-  vpc_security_group_ids = [aws_security_group.public_sg.id]
+  vpc_security_group_ids = [ module.network.public_sg.id]
   associate_public_ip_address = true
 
   provisioner "local-exec" {
@@ -17,6 +18,6 @@ resource "aws_instance" "bastion" {
   EOF
 
   tags = {
-    Name = "bastion_terra"
+    Name = "bastion-${count.index}-${var.region}-terra"
   }
 }

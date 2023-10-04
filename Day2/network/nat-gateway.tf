@@ -1,9 +1,10 @@
 resource "aws_nat_gateway" "nat" {
-    allocation_id = aws_eip.eip.id
-    subnet_id = aws_subnet.private_subnet.id
+    count=length(var.availability_zones)
+    allocation_id = aws_eip.eip[count.index].id
+    subnet_id = aws_subnet.private_subnet[count.index].id
 
     tags = {
-      Name= "nat_terra1"
+      Name= "nat-${var.region}-terra"
     }
   
 }
